@@ -1,4 +1,4 @@
-package speiger.reactorplanner.planner;
+package speiger.reactorplanner.planner.base;
 
 import java.util.List;
 

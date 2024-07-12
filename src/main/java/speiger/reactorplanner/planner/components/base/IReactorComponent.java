@@ -1,14 +1,15 @@
 package speiger.reactorplanner.planner.components.base;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.gson.JsonObject;
 
-import speiger.reactorplanner.planner.ComponentType;
-import speiger.reactorplanner.planner.IReactor;
-import speiger.reactorplanner.planner.ReactorStat;
-import speiger.reactorplanner.planner.ReactorType;
+import speiger.reactorplanner.planner.base.ComponentType;
+import speiger.reactorplanner.planner.base.IReactor;
+import speiger.reactorplanner.planner.base.ReactorStat;
+import speiger.reactorplanner.planner.base.ReactorType;
 import speiger.src.collections.ints.functions.consumer.IntIntConsumer;
 
 public interface IReactorComponent {
@@ -21,7 +22,7 @@ public interface IReactorComponent {
 	
 	public short id();
 	public List<ReactorStat> stats();
-	public ReactorType validReactors();
+	public Set<ReactorType> validReactors();
 	public ComponentType type();
 	public Number stat(ReactorStat stat);
 	public default Number getStat(ReactorStat stat, IReactor reactor, int x, int y) { return stat(stat); }

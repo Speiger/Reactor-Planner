@@ -1,4 +1,4 @@
-package speiger.reactorplanner.planner;
+package speiger.reactorplanner.planner.base;
 
 import speiger.reactorplanner.planner.components.base.IReactorComponent;
 
@@ -24,7 +24,7 @@ public interface IReactor {
 	public int consumeWater(int amount);
 	
 	public boolean isProducingEnergy();
-	public boolean isSteamReactor();
+	public ReactorType reactorType();
 	public boolean isSimulatingPulses();
 	
 	public long gameTime();
