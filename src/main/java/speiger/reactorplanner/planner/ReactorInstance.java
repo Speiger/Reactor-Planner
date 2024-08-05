@@ -1,11 +1,18 @@
 package speiger.reactorplanner.planner;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
+import speiger.reactorplanner.planner.base.ComponentRegistry;
 import speiger.reactorplanner.planner.base.ComponentType;
 import speiger.reactorplanner.planner.base.IReactor;
 import speiger.reactorplanner.planner.base.IReactorProvider;
 import speiger.reactorplanner.planner.base.ReactorStat;
 import speiger.reactorplanner.planner.base.ReactorType;
 import speiger.reactorplanner.planner.components.base.IReactorComponent;
+import speiger.reactorplanner.utils.JsonUtils;
 import speiger.reactorplanner.utils.TrackedCounter;
 import speiger.src.collections.ints.lists.IntArrayList;
 import speiger.src.collections.ints.lists.IntList;
@@ -170,8 +177,6 @@ public class ReactorInstance implements IReactor {
 		prediction.totalWaterConsumed = prediction.totalSteamProduced / 160L;
 	}
 	
-	//TODO implement saving/loading
-	
 	public void reset() {
 		producing = true;
 		isExploded = false;
@@ -258,4 +263,96 @@ public class ReactorInstance implements IReactor {
 	public boolean isSimulatingPulses() { return breeding; }
 	@Override
 	public long gameTime() { return provider.time(tick); }
+	
+	public JsonObject save(JsonObject obj) {
+		obj.addProperty("total_ticks", totalTicks);
+		obj.addProperty("starting_heat", startingHeat);
+		
+		obj.addProperty("tick", tick);
+		obj.addProperty("ticks_left", ticksLeft);
+		
+		obj.addProperty("heat", heat);
+		obj.addProperty("max_heat", maxHeat);
+		obj.addProperty("hem", heatEffectMod);
+		obj.add("average_heat", avgHeat.save(new JsonObject()));
+		
+		obj.addProperty("production", production);
+		obj.addProperty("steam_production", steamProduction);
+		obj.addProperty("total_production", totalProducedEnergy);
+		obj.addProperty("total_steam", totalProducedSteam);
+		obj.addProperty("total_water", totalConsumedWater);
+		
+		obj.addProperty("is_producing", producing);
+		obj.addProperty("is_exploded", isExploded);
+		obj.add("broken_slots", JsonUtils.toArray(brokenSlots, JsonPrimitive::new));
+		obj.addProperty("is_valid", valid);
+		obj.addProperty("filled_slots", filledSlots);
+		
+		obj.addProperty("simulating", simulating);
+		obj.addProperty("breeding", breeding);
+		obj.addProperty("fuel_pulse", fuelPulse);
+		obj.addProperty("breeding_pulse", breedingPulse);
+		
+		obj.add("prediction", prediction.save(new JsonObject()));
+		
+		obj.addProperty("width", width);
+		obj.addProperty("height", height);
+		JsonArray inv = new JsonArray();
+		for(int i = 0,m=items.length;i<m;i++) {
+			IReactorComponent comp = items[i];
+			if(comp == null) continue;
+			JsonObject saved = comp.save();
+			if(saved.isEmpty()) continue;
+			saved.addProperty("slot", i);
+			saved.addProperty("id", ComponentRegistry.save(comp));
+			inv.add(saved);
+		}
+		obj.add("inv", inv);
+		return obj;
+	}
+	
+	public void load(JsonObject obj) {
+		totalTicks = JsonUtils.get(obj, "total_ticks", 0);
+		startingHeat = JsonUtils.get(obj, "starting_heat", 0);
+		
+		tick = JsonUtils.get(obj, "tick", 0);
+		ticksLeft = JsonUtils.get(obj, "ticks_left", 0);
+		
+		heat = JsonUtils.get(obj, "heat", 0);
+		maxHeat = JsonUtils.get(obj, "max_heat", 0);
+		heatEffectMod = JsonUtils.get(obj, "hem", 1F);
+		avgHeat.load(JsonUtils.getMap(obj, "average_heat"));
+		
+		production = JsonUtils.get(obj, "production", 0F);
+		steamProduction = JsonUtils.get(obj, "steam_production", 0);
+		totalProducedEnergy = JsonUtils.get(obj, "total_production", 0L);
+		totalProducedSteam = JsonUtils.get(obj, "total_steam", 0L);
+		totalConsumedWater = JsonUtils.get(obj, "total_water", 0L);
+		
+		producing = JsonUtils.get(obj, "is_producing", false);
+		isExploded = JsonUtils.get(obj, "is_exploded", false);
+		brokenSlots.clear();
+		JsonUtils.fromArray(JsonUtils.getList(obj, "broken_slots"), brokenSlots, JsonElement::getAsInt);
+		valid = JsonUtils.get(obj, "is_valid", false);
+		filledSlots = JsonUtils.get(obj, "filled_slots", 0L);
+		
+		simulating = JsonUtils.get(obj, "simulating", false);
+		breeding = JsonUtils.get(obj, "breeding", false);
+		fuelPulse = JsonUtils.get(obj, "fuel_pulse", 0);
+		breedingPulse = JsonUtils.get(obj, "breeding_pulse", 0);
+		
+		prediction.load(JsonUtils.getMap(obj, "prediction"));
+		
+		width = JsonUtils.get(obj, "width", 0);
+		height = JsonUtils.get(obj, "height", 0);
+		items = new IReactorComponent[width * height];
+		for(JsonElement entry : JsonUtils.getList(obj, "inv")) {
+			JsonObject item = entry.getAsJsonObject();
+			IReactorComponent comp = ComponentRegistry.load(JsonUtils.get(obj, "id", null));
+			if(comp == null) continue;
+			int slot = JsonUtils.get(item, "slot", -1);
+			if(slot == -1) continue;
+			items[slot] = comp;
+		}
+	}
 }

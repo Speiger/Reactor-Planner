@@ -1,5 +1,6 @@
 package speiger.reactorplanner.planner.components.base;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -13,6 +14,7 @@ import speiger.reactorplanner.planner.base.ReactorType;
 import speiger.src.collections.ints.functions.consumer.IntIntConsumer;
 
 public interface IReactorComponent {
+	public static final Set<ReactorType> UNIVERSAL = EnumSet.allOf(ReactorType.class);
 	public static final Number NULL_VALUE = new AtomicInteger(0);
 	
 	public JsonObject save();
