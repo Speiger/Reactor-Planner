@@ -27,7 +27,7 @@ public interface IReactorComponent {
 	public Set<ReactorType> validReactors();
 	public ComponentType type();
 	public Number stat(ReactorStat stat);
-	public default Number getStat(ReactorStat stat, IReactor reactor, int x, int y) { return stat(stat); }
+	public default Number stat(ReactorStat stat, IReactor reactor, int x, int y) { return stat(stat); }
 	public void affectedSlots(int x, int y, IntIntConsumer slots);
 	
 	public void simulate(IReactor reactor, int x, int y, boolean heatTick, boolean damageTick);

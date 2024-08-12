@@ -132,30 +132,30 @@ public class ReactorInstance implements IReactor {
 			else prediction.explosionPower += explosion;
 			
 			if(type == ComponentType.FUEL_ROD) {
-				maxTick = Math.max(maxTick, comp.getStat(ReactorStat.MAX_COMPONENT_DURABILITY, this, x, y).intValue() * tickrate());
-				prediction.heatPerTick += comp.getStat(ReactorStat.HEAT_PRODUCTION, this, x, y).intValue();
+				maxTick = Math.max(maxTick, comp.stat(ReactorStat.MAX_COMPONENT_DURABILITY, this, x, y).intValue() * tickrate());
+				prediction.heatPerTick += comp.stat(ReactorStat.HEAT_PRODUCTION, this, x, y).intValue();
 				breeding = true;
-				prediction.energyPerTick += comp.getStat(ReactorStat.ENERGY_PRODUCTION, this, x, y).floatValue();
+				prediction.energyPerTick += comp.stat(ReactorStat.ENERGY_PRODUCTION, this, x, y).floatValue();
 				breeding = false;
 				prediction.totalFuelRodPulses += fuelPulse;
 				prediction.totalBreedingPulses += breedingPulse;
 				resetData();
-				prediction.totalCellCount += comp.getStat(ReactorStat.ROD_COUNT, this, x, y).intValue();
-				prediction.totalIntenralFuelPulses += comp.getStat(ReactorStat.PULSE_COUNT, this, x, y).intValue();
+				prediction.totalCellCount += comp.stat(ReactorStat.ROD_COUNT, this, x, y).intValue();
+				prediction.totalIntenralFuelPulses += comp.stat(ReactorStat.PULSE_COUNT, this, x, y).intValue();
 				resetData();
 			}
 			else if(type == ComponentType.HEAT_PACK) {
-				int heat = comp.getStat(ReactorStat.HEAT_PRODUCTION, this, x, y).intValue();
+				int heat = comp.stat(ReactorStat.HEAT_PRODUCTION, this, x, y).intValue();
 				prediction.heatPerTick += heat;
 				prediction.heatPackHeatPerTick += heat;
 			}
 			else if(type == ComponentType.HEAT_VENT || type == ComponentType.HEAT_SPREAD) {
-				prediction.coolingPerTick += comp.getStat(ReactorStat.SELF_COOLING, this, x, y).intValue();
-				prediction.reactorCoolingPerTick += comp.getStat(ReactorStat.REACTOR_COOLING, this, x, y).intValue();
+				prediction.coolingPerTick += comp.stat(ReactorStat.SELF_COOLING, this, x, y).intValue();
+				prediction.reactorCoolingPerTick += comp.stat(ReactorStat.REACTOR_COOLING, this, x, y).intValue();
 			}
 			else if(type == ComponentType.PLATING) {
-				maxCapacity += comp.getStat(ReactorStat.MAX_HEAT_STORAGE, this, x, y).intValue();
-				prediction.heatEffectMod *= comp.getStat(ReactorStat.REACTOR_HEAT_EFFECT_MULTIPLIER, this, x, y).floatValue(); //TODO fix in ic2c this isn't implemented.
+				maxCapacity += comp.stat(ReactorStat.MAX_HEAT_STORAGE, this, x, y).intValue();
+				prediction.heatEffectMod *= comp.stat(ReactorStat.REACTOR_HEAT_EFFECT_MULTIPLIER, this, x, y).floatValue(); //TODO fix in ic2c this isn't implemented.
 			}
 		}
 		maxHeat = 10000 + maxCapacity;
@@ -302,7 +302,6 @@ public class ReactorInstance implements IReactor {
 			IReactorComponent comp = items[i];
 			if(comp == null) continue;
 			JsonObject saved = comp.save();
-			if(saved.isEmpty()) continue;
 			saved.addProperty("slot", i);
 			saved.addProperty("id", ComponentRegistry.save(comp));
 			inv.add(saved);
