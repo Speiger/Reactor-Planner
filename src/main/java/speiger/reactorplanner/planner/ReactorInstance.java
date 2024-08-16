@@ -303,7 +303,7 @@ public class ReactorInstance implements IReactor {
 			if(comp == null) continue;
 			JsonObject saved = comp.save();
 			saved.addProperty("slot", i);
-			saved.addProperty("id", ComponentRegistry.save(comp));
+			saved.addProperty("id", ComponentRegistry.INSTANCE.save(comp));
 			inv.add(saved);
 		}
 		obj.add("inv", inv);
@@ -347,7 +347,7 @@ public class ReactorInstance implements IReactor {
 		items = new IReactorComponent[width * height];
 		for(JsonElement entry : JsonUtils.getList(obj, "inv")) {
 			JsonObject item = entry.getAsJsonObject();
-			IReactorComponent comp = ComponentRegistry.load(JsonUtils.get(obj, "id", null));
+			IReactorComponent comp = ComponentRegistry.INSTANCE.load(JsonUtils.get(obj, "id", null));
 			if(comp == null) continue;
 			int slot = JsonUtils.get(item, "slot", -1);
 			if(slot == -1) continue;

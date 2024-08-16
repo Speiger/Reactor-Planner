@@ -16,7 +16,7 @@ public class HeatExchanger extends BaseHeatComponent {
 	protected final ExchangerStats stats;
 	
 	public HeatExchanger(ExchangerStats stats) {
-		super(stats.capacity(), stats.id());
+		super(stats.id(), stats.registryId(), stats.capacity());
 		this.stats = stats;
 	}
 	

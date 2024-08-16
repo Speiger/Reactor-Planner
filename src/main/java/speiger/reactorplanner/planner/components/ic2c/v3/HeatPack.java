@@ -17,10 +17,16 @@ import speiger.src.collections.objects.utils.ObjectSets;
 
 public class HeatPack implements IReactorComponent {
 	final short id;
+	final String registryId;
 	protected int size;
 	
-	public HeatPack(short id, int size) {
+	public HeatPack(short id, String registryId) {
+		this(id, registryId, 0); //TODO implement GUI fetching
+	}
+	
+	public HeatPack(short id, String registryId, int size) {
 		this.id = id;
+		this.registryId = registryId;
 		this.size = size;
 	}
 
@@ -42,6 +48,8 @@ public class HeatPack implements IReactorComponent {
 	public void reset() {}
 	@Override
 	public short id() { return id; }
+	@Override
+	public String registryId() { return registryId; }
 	@Override
 	public List<ReactorStat> stats() { return ObjectLists.singleton(ReactorStat.HEAT_PRODUCTION); }
 	@Override

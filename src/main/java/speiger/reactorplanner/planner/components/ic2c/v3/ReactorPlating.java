@@ -15,11 +15,13 @@ import speiger.src.collections.objects.lists.ObjectArrayList;
 
 public class ReactorPlating implements IReactorComponent {
 	final short id;
+	final String registryId;
 	protected final int heatModifier;
 	protected final float effectModifier;
 	
-	public ReactorPlating(short id, int heatModifier, float effectModifier) {
+	public ReactorPlating(short id, String registryId, int heatModifier, float effectModifier) {
 		this.id = id;
+		this.registryId = registryId;
 		this.heatModifier = heatModifier;
 		this.effectModifier = effectModifier;
 	}
@@ -35,6 +37,8 @@ public class ReactorPlating implements IReactorComponent {
 	public void reset() {}
 	@Override
 	public short id() { return id; }
+	@Override
+	public String registryId() { return registryId; }
 	@Override
 	public List<ReactorStat> stats() { return ObjectArrayList.wrap(ReactorStat.MAX_HEAT_STORAGE, ReactorStat.REACTOR_HEAT_EFFECT_MULTIPLIER); }
 	@Override

@@ -11,14 +11,16 @@ import speiger.reactorplanner.utils.TrackedCounter;
 import speiger.src.collections.ints.functions.consumer.IntIntConsumer;
 
 public abstract class BaseHeatComponent implements IReactorComponent {
-	protected final int maxHeat;
 	protected final short id;
+	protected final String registryId;
+	protected final int maxHeat;
 	protected int heat;
 	protected TrackedCounter changes = new TrackedCounter();
 	
-	public BaseHeatComponent(int maxHeat, short id) {
-		this.maxHeat = maxHeat;
+	public BaseHeatComponent(short id, String registryId, int maxHeat) {
 		this.id = id;
+		this.registryId = registryId;
+		this.maxHeat = maxHeat;
 	}
 	
 	@Override
@@ -48,6 +50,8 @@ public abstract class BaseHeatComponent implements IReactorComponent {
 	
 	@Override
 	public short id() { return id; }
+	@Override
+	public String registryId() { return registryId; }
 	@Override
 	public Set<ReactorType> validReactors() { return IReactorComponent.UNIVERSAL; }
 	

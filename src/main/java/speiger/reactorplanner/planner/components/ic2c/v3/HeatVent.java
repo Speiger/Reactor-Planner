@@ -20,7 +20,7 @@ public class HeatVent extends BaseHeatComponent {
 	protected double storage;
 	
 	public HeatVent(VentStats stats) {
-		super(stats.capacity(), stats.id());
+		super(stats.id(), stats.registryId(), stats.capacity());
 		this.stats = stats;
 	}
 	

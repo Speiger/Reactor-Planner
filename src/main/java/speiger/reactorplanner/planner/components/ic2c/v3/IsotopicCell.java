@@ -17,8 +17,8 @@ public class IsotopicCell extends BaseDurabilityComponent {
 	protected final int heatRequired;
 	protected int finished = 0;
 	
-	public IsotopicCell(short id, int maxDamage, int heatRequired) {
-		super(id, maxDamage);
+	public IsotopicCell(short id, String registryId, int maxDamage, int heatRequired) {
+		super(id, registryId, maxDamage);
 		damage = maxDamage;
 		this.heatRequired = heatRequired;
 	}

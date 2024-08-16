@@ -17,8 +17,8 @@ public class Reflector extends BaseDurabilityComponent {
 	protected final boolean unbreakable;
 	protected int refilled = 0;
 	
-	public Reflector(short id, int maxDamage, boolean unrbeakable) {
-		super(id, maxDamage);
+	public Reflector(short id, String registryId, int maxDamage, boolean unrbeakable) {
+		super(id, registryId, maxDamage);
 		this.unbreakable = unrbeakable;
 	}
 	

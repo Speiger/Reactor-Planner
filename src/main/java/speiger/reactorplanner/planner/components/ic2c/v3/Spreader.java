@@ -15,10 +15,12 @@ import speiger.src.collections.objects.lists.ObjectArrayList;
 
 public class Spreader implements IReactorComponent {
 	final short id;
+	final String registryId;
 	final int coolrate;
 	
-	public Spreader(short id, int coolrate) {
+	public Spreader(short id, String registryId, int coolrate) {
 		this.id = id;
+		this.registryId = registryId;
 		this.coolrate = coolrate;
 	}
 	
@@ -32,6 +34,8 @@ public class Spreader implements IReactorComponent {
 	public void reset() {}
 	@Override
 	public short id() { return id; }
+	@Override
+	public String registryId() { return registryId; }
 	@Override
 	public List<ReactorStat> stats() { return ObjectArrayList.wrap(ReactorStat.PART_COOLING); }
 	@Override

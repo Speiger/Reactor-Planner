@@ -14,8 +14,8 @@ import speiger.src.collections.objects.lists.ObjectArrayList;
 public class Condensator extends BaseHeatComponent {
 	protected int refuels;
 	
-	public Condensator(int maxHeat, short id) {
-		super(maxHeat, id);
+	public Condensator(short id, String registryId, int maxHeat) {
+		super(id, registryId, maxHeat);
 	}
 	
 	@Override

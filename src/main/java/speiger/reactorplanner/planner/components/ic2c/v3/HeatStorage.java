@@ -9,8 +9,8 @@ import speiger.src.collections.objects.utils.ObjectLists;
 
 public class HeatStorage extends BaseHeatComponent {
 	
-	public HeatStorage(int maxHeat, short id) {
-		super(maxHeat, id);
+	public HeatStorage(short id, String registryId, int maxHeat) {
+		super(id, registryId, maxHeat);
 	}
 	
 	@Override

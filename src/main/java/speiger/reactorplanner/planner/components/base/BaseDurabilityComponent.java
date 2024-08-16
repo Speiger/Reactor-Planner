@@ -11,11 +11,13 @@ import speiger.src.collections.ints.functions.consumer.IntIntConsumer;
 
 public abstract class BaseDurabilityComponent implements IReactorComponent {
 	final short id;
+	final String registryId;
 	protected final int maxDamage;
 	protected int damage;
 	
-	public BaseDurabilityComponent(short id, int maxDamage) {
+	public BaseDurabilityComponent(short id, String registryId, int maxDamage) {
 		this.id = id;
+		this.registryId = registryId;
 		this.maxDamage = maxDamage;
 	}
 	
@@ -41,6 +43,8 @@ public abstract class BaseDurabilityComponent implements IReactorComponent {
 	
 	@Override
 	public short id() { return id; }
+	@Override
+	public String registryId() { return registryId; }
 	@Override
 	public Set<ReactorType> validReactors() { return IReactorComponent.UNIVERSAL; }
 	@Override

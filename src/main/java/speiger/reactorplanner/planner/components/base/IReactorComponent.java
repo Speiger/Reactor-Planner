@@ -23,6 +23,7 @@ public interface IReactorComponent {
 	public void reset();
 	
 	public short id();
+	public String registryId();
 	public List<ReactorStat> stats();
 	public Set<ReactorType> validReactors();
 	public ComponentType type();

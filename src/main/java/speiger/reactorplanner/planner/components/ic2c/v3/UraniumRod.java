@@ -24,8 +24,8 @@ public class UraniumRod extends BaseDurabilityComponent {
 	protected final int rodCount;
 	protected int refilled;
 	
-	public UraniumRod(short id, UraniumType type, int rodCount) {
-		super(id, type.durability());
+	public UraniumRod(short id, String registryId, UraniumType type, int rodCount) {
+		super(id, registryId, type.durability());
 		this.type = type;
 		this.rodCount = rodCount;
 	}
