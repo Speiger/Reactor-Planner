@@ -6,8 +6,13 @@ import speiger.reactorplanner.planner.components.ic2c.v3.HeatExchanger;
 import speiger.reactorplanner.planner.components.ic2c.v3.HeatPack;
 import speiger.reactorplanner.planner.components.ic2c.v3.HeatStorage;
 import speiger.reactorplanner.planner.components.ic2c.v3.HeatVent;
+import speiger.reactorplanner.planner.components.ic2c.v3.IsotopicCell;
 import speiger.reactorplanner.planner.components.ic2c.v3.ReactorPlating;
+import speiger.reactorplanner.planner.components.ic2c.v3.Reflector;
+import speiger.reactorplanner.planner.components.ic2c.v3.Spreader;
+import speiger.reactorplanner.planner.components.ic2c.v3.UraniumRod;
 import speiger.reactorplanner.planner.utils.ExchangerStats;
+import speiger.reactorplanner.planner.utils.UraniumType;
 import speiger.reactorplanner.planner.utils.VentStats;
 import speiger.reactorplanner.planner.utils.VentType;
 import speiger.reactorplanner.utils.VersionedMod;
@@ -72,6 +77,61 @@ public class IC2Classic {
 		registerPlating((short)31, "plating", 1000, 0.95F, IC2_1710, IC2_1122, IC2_1192);
 		registerPlating((short)32, "plating_containment", 500, 0.9F, IC2_1710, IC2_1122, IC2_1192);
 		registerPlating((short)33, "plating_heat_capacity", 2000, 0.99F, IC2_1710, IC2_1122, IC2_1192);
+		
+		registerSpreader((short)26, "heat_spreader", 4, IC2_1710, IC2_1122, IC2_1192);
+		
+		registerReflector((short)34, "reflector", 10000, false, IC2_1710, IC2_1122, IC2_1192);
+		registerReflector((short)35, "reflector_thick", 40000, false, IC2_1710, IC2_1122, IC2_1192);
+		registerReflector((short)53, "reflector_iridium", 320000, true, IC2_1710, IC2_1122, IC2_1192);
+		
+		//TODO implement fuel cell
+		
+		registerIsotopic((short)36, "uranium_rod_isotopic", UraniumType.STANDARD, IC2_1710, IC2_1122, IC2_1192);
+		registerIsotopic((short)43, "uranium_rod_isotopic_redstone", UraniumType.REDSTONE, IC2_1710, IC2_1122, IC2_1192);
+		registerIsotopic((short)44, "uranium_rod_isotopic_blaze", UraniumType.BLAZE, IC2_1710, IC2_1122, IC2_1192);
+		registerIsotopic((short)45, "uranium_rod_isotopic_ender_pearl", UraniumType.ENDER, IC2_1710, IC2_1122, IC2_1192);
+		registerIsotopic((short)46, "uranium_rod_isotopic_nether_star", UraniumType.NETHER_STAR, IC2_1710, IC2_1122, IC2_1192);
+		registerIsotopic((short)47, "uranium_rod_isotopic_charcoal", UraniumType.CHARCOAL, IC2_1710, IC2_1122, IC2_1192);
+		
+		registerRod((short)0, "uranium_rod_single", UraniumType.STANDARD, 1, IC2_1710, IC2_1122, IC2_1192);
+		registerRod((short)1, "uranium_rod_dual", UraniumType.STANDARD, 2, IC2_1710, IC2_1122, IC2_1192);
+		registerRod((short)2, "uranium_rod_quad", UraniumType.STANDARD, 4, IC2_1710, IC2_1122, IC2_1192);
+
+		registerRod((short)3, "uranium_rod_redstone_single", UraniumType.REDSTONE, 1, IC2_1710, IC2_1122, IC2_1192);
+		registerRod((short)4, "uranium_rod_redstone_dual", UraniumType.REDSTONE, 2, IC2_1710, IC2_1122, IC2_1192);
+		registerRod((short)5, "uranium_rod_redstone_quad", UraniumType.REDSTONE, 4, IC2_1710, IC2_1122, IC2_1192);
+		
+		registerRod((short)6, "uranium_rod_blaze_single", UraniumType.BLAZE, 1, IC2_1710, IC2_1122, IC2_1192);
+		registerRod((short)7, "uranium_rod_blaze_dual", UraniumType.BLAZE, 2, IC2_1710, IC2_1122, IC2_1192);
+		registerRod((short)8, "uranium_rod_blaze_quad", UraniumType.BLAZE, 4, IC2_1710, IC2_1122, IC2_1192);
+		
+		registerRod((short)9, "uranium_rod_ender_pearl_single", UraniumType.ENDER, 1, IC2_1192);
+		registerRod((short)10, "uranium_rod_ender_pearl_dual", UraniumType.ENDER, 2, IC2_1192);
+		registerRod((short)11, "uranium_rod_ender_pearl_quad", UraniumType.ENDER, 4, IC2_1192);
+		
+		registerRod((short)37, "uranium_rod_nether_star_single", UraniumType.NETHER_STAR, 1, IC2_1710, IC2_1122, IC2_1192);
+		registerRod((short)38, "uranium_rod_nether_star_dual", UraniumType.NETHER_STAR, 2, IC2_1710, IC2_1122, IC2_1192);
+		registerRod((short)39, "uranium_rod_nether_star_quad", UraniumType.NETHER_STAR, 4, IC2_1710, IC2_1122, IC2_1192);
+		
+		registerRod((short)40, "uranium_rod_charcoal_single", UraniumType.ENDER, 1, IC2_1192);
+		registerRod((short)41, "uranium_rod_charcoal_dual", UraniumType.ENDER, 2, IC2_1192);
+		registerRod((short)42, "uranium_rod_charcoal_quad", UraniumType.ENDER, 4, IC2_1192);
+	}
+	
+	private static void registerRod(short id, String registryId, UraniumType type, int count, VersionedMod... mods) {
+		ComponentRegistry.registerComponent(registryId, id, () -> new UraniumRod(id, registryId, type, count), mods);
+	}
+	
+	private static void registerIsotopic(short id, String registryId, UraniumType type, VersionedMod... mods) {
+		ComponentRegistry.registerComponent(registryId, id, () -> new IsotopicCell(id, registryId, type.durability(), type.breedingHeat()), mods);
+	}
+	
+	private static void registerReflector(short id, String registryId, int durability, boolean unbreakable, VersionedMod... mods) {
+		ComponentRegistry.registerComponent(registryId, id, () -> new Reflector(id, registryId, durability, unbreakable), mods);
+	}
+	
+	private static void registerSpreader(short id, String registryId, int cooling, VersionedMod... mods) {
+		ComponentRegistry.registerComponent(registryId, id, () -> new Spreader(id, registryId, cooling), mods);
 	}
 	
 	private static void registerPlating(short id, String registryId, int heatModifier, float effectModifier, VersionedMod... mods) {
