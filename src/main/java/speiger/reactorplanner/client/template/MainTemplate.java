@@ -1,21 +1,23 @@
 package speiger.reactorplanner.client.template;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JSlider;
+import javax.swing.JTabbedPane;
 import javax.swing.border.BevelBorder;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import java.awt.Color;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
@@ -71,23 +73,6 @@ public class MainTemplate {
 		panel.add(reactor_panel, BorderLayout.WEST);
 		reactor_panel.setLayout(new BorderLayout(0, 0));
 		
-		JPanel reactor_layout = new JPanel();
-		reactor_layout.setBackground(new Color(198, 198, 198));
-		reactor_layout.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new EmptyBorder(5, 5, 5, 5)));
-		reactor_panel.add(reactor_layout, BorderLayout.CENTER);
-		reactor_layout.setLayout(new BorderLayout(0, 0));
-		
-		JPanel Grid = new JPanel();
-		Grid.setBackground(new Color(198, 198, 198));
-		Grid.setBorder(null);
-		reactor_layout.add(Grid, BorderLayout.CENTER);
-		Grid.setLayout(new BoxLayout(Grid, BoxLayout.X_AXIS));
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("D:\\Projects\\Reactor-Planner\\src\\main\\resources\\assets\\base\\ReactorGrid.png"));
-		lblNewLabel.setAlignmentY(0.0f);
-		Grid.add(lblNewLabel);
-		
 		JPanel classification = new JPanel();
 		classification.setBackground(new Color(198, 198, 198));
 		classification.setBorder(new CompoundBorder(new EmptyBorder(5, 0, 5, 0), new BevelBorder(BevelBorder.RAISED, null, null, null, null)));
@@ -103,7 +88,63 @@ public class MainTemplate {
 		progressBar.setMinimumSize(new Dimension(10, 20));
 		classification.add(progressBar);
 		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		reactor_panel.add(tabbedPane, BorderLayout.CENTER);
 		
+		JPanel reactor_tab = new JPanel();
+		reactor_tab.setBackground(new Color(192, 192, 192));
+		tabbedPane.addTab("Nuclear Reactor", (Icon) null, reactor_tab, null);
+		reactor_tab.setLayout(new BorderLayout(0, 0));
+		
+		JPanel Grid = new JPanel();
+		Grid.setBackground(new Color(198, 198, 198));
+		Grid.setBorder(null);
+		reactor_tab.add(Grid, BorderLayout.NORTH);
+		Grid.setLayout(new BoxLayout(Grid, BoxLayout.X_AXIS));
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("D:\\Projects\\Reactor-Planner\\src\\main\\resources\\assets\\base\\ReactorGrid.png"));
+		lblNewLabel.setAlignmentY(0.0f);
+		Grid.add(lblNewLabel);
+		
+		JPanel reactor_controls = new JPanel();
+		reactor_controls.setBackground(new Color(192, 192, 192));
+		reactor_controls.setBorder(new EmptyBorder(5, 5, 5, 5));
+		reactor_tab.add(reactor_controls, BorderLayout.CENTER);
+		reactor_controls.setLayout(new BoxLayout(reactor_controls, BoxLayout.Y_AXIS));
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setMaximumSize(new Dimension(32767, 28));
+		panel_1.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel_1.setAlignmentY(Component.TOP_ALIGNMENT);
+		panel_1.setBackground(new Color(192, 192, 192));
+		reactor_controls.add(panel_1);
+		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
+		
+		JLabel lblNewLabel_1 = new JLabel("Reactor Chambers: ");
+		lblNewLabel_1.setAlignmentY(Component.TOP_ALIGNMENT);
+		panel_1.add(lblNewLabel_1);
+		
+		JSlider slider = new JSlider();
+		slider.setAlignmentY(Component.TOP_ALIGNMENT);
+		slider.setValue(6);
+		slider.setMaximum(6);
+		slider.setPreferredSize(new Dimension(180, 26));
+		slider.setBackground(new Color(192, 192, 192));
+		slider.setPaintLabels(true);
+		slider.setPaintTicks(true);
+		panel_1.add(slider);
+		
+		Component horizontalStrut = Box.createHorizontalStrut(4);
+		panel_1.add(horizontalStrut);
+		
+		JLabel lblNewLabel_2 = new JLabel("6");
+		lblNewLabel_2.setAlignmentY(Component.TOP_ALIGNMENT);
+		panel_1.add(lblNewLabel_2);
+		slider.addChangeListener(T -> {
+			lblNewLabel_2.setText(""+slider.getValue());
+		});
+				
 		JPanel component_panel = new JPanel();
 		component_panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panel.add(component_panel, BorderLayout.EAST);
