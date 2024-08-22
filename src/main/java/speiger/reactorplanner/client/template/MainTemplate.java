@@ -83,9 +83,9 @@ public class MainTemplate {
 		progressBar.setString("No Classification");
 		progressBar.setStringPainted(true);
 		progressBar.setBackground(new Color(0, 255, 0));
-		progressBar.setPreferredSize(new Dimension(146, 20));
-		progressBar.setMaximumSize(new Dimension(32767, 20));
-		progressBar.setMinimumSize(new Dimension(10, 20));
+//		progressBar.setPreferredSize(new Dimension(146, 20));
+//		progressBar.setMaximumSize(new Dimension(32767, 20));
+//		progressBar.setMinimumSize(new Dimension(10, 20));
 		classification.add(progressBar);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -111,14 +111,14 @@ public class MainTemplate {
 		reactor_controls.setBackground(new Color(192, 192, 192));
 		reactor_controls.setBorder(new EmptyBorder(5, 5, 5, 5));
 		reactor_tab.add(reactor_controls, BorderLayout.CENTER);
-		reactor_controls.setLayout(new BoxLayout(reactor_controls, BoxLayout.Y_AXIS));
+		reactor_controls.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setMaximumSize(new Dimension(32767, 28));
 		panel_1.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel_1.setAlignmentY(Component.TOP_ALIGNMENT);
 		panel_1.setBackground(new Color(192, 192, 192));
-		reactor_controls.add(panel_1);
+		reactor_controls.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
 		
 		JLabel lblNewLabel_1 = new JLabel("Reactor Chambers: ");
@@ -129,7 +129,6 @@ public class MainTemplate {
 		slider.setAlignmentY(Component.TOP_ALIGNMENT);
 		slider.setValue(6);
 		slider.setMaximum(6);
-		slider.setPreferredSize(new Dimension(180, 26));
 		slider.setBackground(new Color(192, 192, 192));
 		slider.setPaintLabels(true);
 		slider.setPaintTicks(true);
