@@ -68,10 +68,10 @@ public class MainTemplate {
 		panel.add(stats_panel, BorderLayout.SOUTH);
 		
 		JPanel reactor_panel = new JPanel();
-		reactor_panel.setBackground(new Color(198, 198, 198));
+		reactor_panel.setBackground(new Color(192, 192, 192));
 		reactor_panel.setBorder(new EmptyBorder(0, 10, 0, 0));
 		panel.add(reactor_panel, BorderLayout.WEST);
-		reactor_panel.setLayout(new BorderLayout(0, 0));
+		reactor_panel.setLayout(new TopBiasedBorderLayout(0, 0));
 		
 		JPanel classification = new JPanel();
 		classification.setBackground(new Color(198, 198, 198));
@@ -89,7 +89,7 @@ public class MainTemplate {
 		classification.add(progressBar);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		reactor_panel.add(tabbedPane, BorderLayout.CENTER);
+		reactor_panel.add(tabbedPane);
 		
 		JPanel reactor_tab = new JPanel();
 		reactor_tab.setBackground(new Color(192, 192, 192));
@@ -110,7 +110,7 @@ public class MainTemplate {
 		JPanel reactor_controls = new JPanel();
 		reactor_controls.setBackground(new Color(192, 192, 192));
 		reactor_controls.setBorder(new EmptyBorder(5, 5, 5, 5));
-		reactor_tab.add(reactor_controls, BorderLayout.CENTER);
+		reactor_tab.add(reactor_controls);
 		reactor_controls.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_1 = new JPanel();
@@ -140,10 +140,11 @@ public class MainTemplate {
 		JLabel lblNewLabel_2 = new JLabel("6");
 		lblNewLabel_2.setAlignmentY(Component.TOP_ALIGNMENT);
 		panel_1.add(lblNewLabel_2);
-		slider.addChangeListener(T -> {
-			lblNewLabel_2.setText(""+slider.getValue());
-		});
-				
+		slider.addChangeListener(T -> lblNewLabel_2.setText(""+slider.getValue()));
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(192, 192, 192));
+		reactor_panel.add(panel_2, BorderLayout.SOUTH);
+		
 		JPanel component_panel = new JPanel();
 		component_panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panel.add(component_panel, BorderLayout.EAST);
